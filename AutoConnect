@@ -11,5 +11,5 @@ os.system('wmic process where "name like \'%DibServer%\'" call terminate')
 time.sleep(5)        
 
 app = application.Application()
-app.start('C:\CREON\STARTER\coStarter.exe /prj:cp /id:31ind /pwd:ind31^^ /pwdcert:indiana31^^ /autostart')
+app.start('C:\CREON\STARTER\coStarter.exe /prj:cp /id: /pwd:비번 /pwdcert:인증서비번 /autostart')
 time.sleep(60)
