@@ -23,7 +23,7 @@ cond_1 = df['고가'] > df['목표가']
 cond_2 = df['목표가'] > df['5일이동평균']
 cond_3 = df['목표가'] > df['10일이동평균']
 df['수익률'] = np.where(cond_1 & cond_2 & cond_3, 
-                     df['종가'] / df['목표가'],1)
+                     df['종가'] / df['목표가'] - 0.26%, 1)
 df['누적수익률'] = df['수익률'].cumprod()
 df['낙폭'] = (df['누적수익률'].cummax() - df['누적수익률']) / df['누적수익률'].cummax() * 100
 print("MDD(%): ", df['낙폭'].max())
