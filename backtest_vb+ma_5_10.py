@@ -51,7 +51,7 @@ df['낙폭'] = (df['누적수익률_vb+5MA+10MA'].cummax() - df['누적수익률
 print("MDD_vb+5MA+10MA(%): ", df['낙폭'].max())
 
 #수익률 계산_4 변동성돌파전략+10MA
-df['수익률_vb+10MA'] = np.where(cond_1 & cond_2 & cond_3, 
+df['수익률_vb+10MA'] = np.where(cond_1 & cond_3, 
                      df['종가'] / df['목표가'],1)
 df['누적수익률_vb+10MA'] = df['수익률_vb+10MA'].cumprod()
 df['낙폭'] = (df['누적수익률_vb+10MA'].cummax() - df['누적수익률_vb+10MA']) / df['누적수익률_vb+10MA'].cummax() * 100
