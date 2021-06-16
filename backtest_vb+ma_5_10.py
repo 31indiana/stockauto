@@ -27,9 +27,10 @@ cond_1 = df['고가'] > df['목표가']
 cond_2 = df['목표가'] > df['5일이동평균']
 cond_3 = df['목표가'] > df['10일이동평균']
 
+fee = 0.0026
 #수익률 계산_1 변동성돌파전략
 df['수익률_vb'] = np.where(cond_1,   #당일고가가 타겟가격보다 높으면 매수 진행
-                     df['종가'] / df['목표가'] - 0.26%, 1) #- fee :매수시 수수료 0.015%, 매도시 수수료 0.015%, 거래세 매도시 0.23% 총(0.26%) #종가/타겟가격: 수익률
+                     df['종가'] / df['목표가'] - fee, 1) #- fee :매수시 수수료 0.015%, 매도시 수수료 0.015%, 거래세 매도시 0.23% 총(0.26%) #종가/타겟가격: 수익률
                        #조건에 맞지 않아 매수없으면 수익률은 그대로 1.
 df['누적수익률_vb'] = df['수익률_vb'].cumprod()
 df['낙폭'] = (df['누적수익률_vb'].cummax() - df['누적수익률_vb']) / df['누적수익률_vb'].cummax() * 100
@@ -37,7 +38,7 @@ print("MDD_vb(%): ", df['낙폭'].max())
 
 #수익률 계산_2 변동성돌파전략+5MA
 df['수익률_vb+5MA'] = np.where(cond_1 & cond_2, 
-                     df['종가'] / df['목표가'] - 0.26%, 1)
+                     df['종가'] / df['목표가'] - fee, 1)
 df['누적수익률_vb+5MA'] = df['수익률_vb+5MA'].cumprod()
 df['낙폭'] = (df['누적수익률_vb+5MA'].cummax() - df['누적수익률_vb+5MA']) / df['누적수익률_vb+5MA'].cummax() * 100
 print("MDD_vb+5MA(%): ", df['낙폭'].max())
@@ -45,14 +46,14 @@ print("MDD_vb+5MA(%): ", df['낙폭'].max())
 
 #수익률 계산_3 변동성돌파전략+5MA+10MA
 df['수익률_vb+5MA+10MA'] = np.where(cond_1 & cond_2 & cond_3, 
-                     df['종가'] / df['목표가'] - 0.26%, 1)
+                     df['종가'] / df['목표가'] - fee, 1)
 df['누적수익률_vb+5MA+10MA'] = df['수익률_vb+5MA+10MA'].cumprod()
 df['낙폭'] = (df['누적수익률_vb+5MA+10MA'].cummax() - df['누적수익률_vb+5MA+10MA']) / df['누적수익률_vb+5MA+10MA'].cummax() * 100
 print("MDD_vb+5MA+10MA(%): ", df['낙폭'].max())
 
 #수익률 계산_4 변동성돌파전략+10MA
 df['수익률_vb+10MA'] = np.where(cond_1 & cond_3, 
-                     df['종가'] / df['목표가'] - 0.26%, 1)
+                     df['종가'] / df['목표가'] - fee, 1)
 df['누적수익률_vb+10MA'] = df['수익률_vb+10MA'].cumprod()
 df['낙폭'] = (df['누적수익률_vb+10MA'].cummax() - df['누적수익률_vb+10MA']) / df['누적수익률_vb+10MA'].cummax() * 100
 print("MDD_vb+10MA(%): ", df['낙폭'].max())
